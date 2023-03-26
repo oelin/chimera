@@ -1,15 +1,5 @@
-class LinearTransformation(Function):
-
-    def forward(self, x: Variable, w: Variable, b: Variable) -> Variable:
-        return variable(x.data @ w.data + b.data)
-    
-    def backward(self, x, w, b, grad):
-        grad_x = np.dot(grad, w.data.T)
-        grad_weights = np.dot(x.data.T, grad)
-        grad_bias = np.sum(grad, axis=0)
-        x.grad += grad_x
-        w.grad += grad_weights
-        b.grad += grad_bias
+from ... module import Module
+from .. functions import linear
 
 
 class Linear(Module):
@@ -23,4 +13,4 @@ class Linear(Module):
         return self.weights, self.bias
     
     def forward(self, x: Variable) -> Variable:
-        return LinearTransformation()(x, self.weights, self.bias)
+        return linear(x, self.weights, self.bias)
