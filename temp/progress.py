@@ -98,5 +98,3 @@ class MSELoss(Function):
     
     def backward(self, y_pred: Variable, y_true: Variable, grad) -> None:
         y_pred.grad += (grad * 2 * self.diff) / self.diff.size 
-
-from torch.nn import MSELoss as MSELossT
